@@ -104,8 +104,6 @@ class _QuranPlayerScreenState extends State<QuranPlayerScreen>
       if (widget.tracks.isEmpty) {
         widget.tracks.addAll(widget.savedQuranList2);
       }
-      debugPrint(
-          "savedQuranList length is home ${widget.savedQuranList2.length}");
     }
   }
 
@@ -150,7 +148,6 @@ class _QuranPlayerScreenState extends State<QuranPlayerScreen>
       });
       return;
     } catch (e) {
-      // Show snackbar
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('No internet connection!'),
       ));
@@ -179,11 +176,6 @@ class _QuranPlayerScreenState extends State<QuranPlayerScreen>
                   height: MediaQuery.of(context).size.height * .9,
                   child: Scaffold(
                     body:
-                        //  widget.tracks.isEmpty
-                        //     ? const Center(
-                        //         child: Text('No Internet Connection'),
-                        //       )
-                        //     :
                         SafeArea(
                       child: LayoutBuilder(builder: (context, constraints) {
                         return Container(
