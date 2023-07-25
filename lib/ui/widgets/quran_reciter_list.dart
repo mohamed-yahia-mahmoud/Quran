@@ -53,6 +53,7 @@ class _QuranByReciterListWidgetState extends State<QuranByReciterListWidget> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? savedQuranList = pref.getString("savedQuranList");
     if (savedQuranList != null) {
+      widget.savedQuranList2.clear();
       widget.savedQuranList = await jsonDecode(savedQuranList);
       debugPrint(widget.savedQuranList.toString());
       for (var item in widget.savedQuranList) {
@@ -61,7 +62,8 @@ class _QuranByReciterListWidgetState extends State<QuranByReciterListWidget> {
           audioUrl: item['audio_url'],
         ));
       }
-      debugPrint("savedQuranList length is ${widget.savedQuranList2.length}");
+      debugPrint(
+          "savedQuranList length is list player ${widget.savedQuranList2.length}");
     }
   }
 
