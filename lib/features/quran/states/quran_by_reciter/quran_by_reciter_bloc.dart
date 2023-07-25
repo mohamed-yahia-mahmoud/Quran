@@ -44,6 +44,7 @@ class QuranByReciterBloc
       return result.when<void>(ok: (ok) {
         if (ok.isNotEmpty) {
           savedQuranList = ok;
+          pref.clear();
           pref.setString('savedQuranList', jsonEncode(ok));
         }
         return emit(

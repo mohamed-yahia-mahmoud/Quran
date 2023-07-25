@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:quran/features/quran/states/quran_by_reciter/quran_by_reciter_bloc.dart';
 import 'package:quran/features/quran/states/reciter_bloc/reciter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +10,14 @@ import 'package:quran/features/quran/data/models/quran_model.dart';
 import 'package:quran/features/quran/states/search_bloc/search_bloc.dart';
 import 'package:quran/ui/screens/quran_player_screen.dart';
 import 'package:quran/ui/widgets/quran_reciter_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   final GetIt instance;
-  const HomeScreen({super.key, required this.instance});
+
+  var savedQuranList;
+  List<QuranModel> savedQuranList2 = [];
+  HomeScreen({super.key, required this.instance});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -30,6 +36,24 @@ class _HomeScreenState extends State<HomeScreen> {
     reciterBloc = widget.instance.get<ReciterBloc>();
     quranByReciterBloc = widget.instance.get<QuranByReciterBloc>();
     searchBloc = widget.instance.get<SearchBloc>();
+    checkList();
+  }
+
+  checkList() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? savedQuranList = pref.getString("savedQuranList");
+    if (savedQuranList != null) {
+      widget.savedQuranList = await jsonDecode(savedQuranList);
+      debugPrint(widget.savedQuranList.toString());
+      for (var item in widget.savedQuranList) {
+        widget.savedQuranList2.add(QuranModel(
+          id: item['id'],
+          audioUrl: item['audio_url'],
+        ));
+      }
+      debugPrint(
+          "savedQuranList length is home ${widget.savedQuranList2.length}");
+    }
   }
 
   void searchFieldListener() {
@@ -103,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   sura: (AppLocalizations.of(context)!.isEnLocale)
                       ? reciterBloc.suarsEnglishName
                       : reciterBloc.suarsArabicName,
-                  tracks: tracks,
+                  tracks: tracks.isNotEmpty ? tracks : widget.savedQuranList2,
                   initialIndex: initialIndex,
                 )));
     return;

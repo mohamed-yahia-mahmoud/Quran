@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -11,13 +12,16 @@ import 'package:quran/ui/widgets/top_likes.dart';
 import 'package:quran/ui/widgets/track_list.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// [tracks] are quran list
 /// [initialIndex] is index of song list that will be played
 class QuranPlayerScreen extends StatefulWidget {
   final int initialIndex;
-  final List<QuranModel> tracks;
+  List<QuranModel> tracks;
   final List<String> sura;
+  var savedQuranList;
+  List<QuranModel> savedQuranList2 = [];
 
   QuranPlayerScreen(
       {super.key,
@@ -42,6 +46,7 @@ class _QuranPlayerScreenState extends State<QuranPlayerScreen>
   List<AudioSource> audioSources = [];
 
   Future<void> _initPlayer() async {
+    await checkList();
     final cacheManager = DefaultCacheManager();
     var cacheDir = await getTemporaryDirectory();
     for (var track in widget.tracks) {
@@ -81,6 +86,26 @@ class _QuranPlayerScreenState extends State<QuranPlayerScreen>
       return true;
     } else {
       return false;
+    }
+  }
+
+  checkList() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? savedQuranList = pref.getString("savedQuranList");
+    if (savedQuranList != null) {
+      widget.savedQuranList = await jsonDecode(savedQuranList);
+      debugPrint(widget.savedQuranList.toString());
+      for (var item in widget.savedQuranList) {
+        widget.savedQuranList2.add(QuranModel(
+          id: item['id'],
+          audioUrl: item['audio_url'],
+        ));
+      }
+      if (widget.tracks.isEmpty) {
+        widget.tracks.addAll(widget.savedQuranList2);
+      }
+      debugPrint(
+          "savedQuranList length is home ${widget.savedQuranList2.length}");
     }
   }
 
@@ -153,114 +178,111 @@ class _QuranPlayerScreenState extends State<QuranPlayerScreen>
                 return SizedBox(
                   height: MediaQuery.of(context).size.height * .9,
                   child: Scaffold(
-                    body: widget.tracks.isEmpty
-                        ? const Center(
-                            child: Text('No Internet Connection'),
-                          )
-                        : SafeArea(
-                            child:
-                                LayoutBuilder(builder: (context, constraints) {
-                              return Container(
-                                constraints: constraints,
+                    body:
+                        //  widget.tracks.isEmpty
+                        //     ? const Center(
+                        //         child: Text('No Internet Connection'),
+                        //       )
+                        //     :
+                        SafeArea(
+                      child: LayoutBuilder(builder: (context, constraints) {
+                        return Container(
+                          constraints: constraints,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 16),
+                                  child: Text(
+                                    AppLocalizations.of(context)
+                                            ?.translate('top_likes') ??
+                                        "Top likes",
+                                    key: const Key("top_likes"),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(fontWeight: FontWeight.w600),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ),
+                              TopLikes(
+                                sura: widget.sura,
+                                tracks: widget.tracks,
+                                currentIndex: currentMusicIndex,
+                                onClickTrack: (index) {
+                                  playWithSelectedIndex(index);
+                                },
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 2, left: 16),
+                                  child: Text(
+                                    AppLocalizations.of(context)
+                                            ?.translate('listen_Quran') ??
+                                        "listen Quran",
+                                    key: Key("listen_Quran"),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(fontWeight: FontWeight.w600),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                ),
+                              ),
+                              TrackList(
+                                sura: widget.sura,
+                                tracks: widget.tracks,
+                                currentIndex: currentMusicIndex,
+                                onClickTrack: (index) {
+                                  playWithSelectedIndex(index);
+                                },
+                              ),
+                              SizedBox(
+                                height: 180,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 16),
-                                        child: Text(
-                                          AppLocalizations.of(context)
-                                                  ?.translate('top_likes') ??
-                                              "Top likes",
-                                          key: const Key("top_likes"),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                  fontWeight: FontWeight.w600),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                        ),
-                                      ),
+                                    _mainBody(
+                                        currentMusic:
+                                            widget.tracks[currentMusicIndex],
+                                        index: currentMusicIndex),
+                                    MediaPlayerProgressWidget(
+                                      audioPlayer: player,
                                     ),
-                                    TopLikes(
-                                      sura: widget.sura,
-                                      tracks: widget.tracks,
-                                      currentIndex: currentMusicIndex,
-                                      onClickTrack: (index) {
-                                        playWithSelectedIndex(index);
+                                    MediaPlayerNavigationButtonWidget(
+                                      audioPlayer: player,
+                                      onPlay: onPlay,
+                                      onPrev: !player.hasPrevious
+                                          ? null
+                                          : player.seekToPrevious,
+                                      onNext: !player.hasNext
+                                          ? null
+                                          : player.seekToNext,
+                                      onClickPlaylist: () {},
+                                      isShuffleActive: isShuffleModeActive,
+                                      onClickShuffle: () {
+                                        player.setShuffleModeEnabled(
+                                            !isShuffleModeActive);
+                                        if (!isShuffleModeActive) {
+                                          player.shuffle();
+                                        }
                                       },
-                                    ),
-                                    SizedBox(
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 2, left: 16),
-                                        child: Text(
-                                          AppLocalizations.of(context)
-                                                  ?.translate('listen_Quran') ??
-                                              "listen Quran",
-                                          key: Key("listen_Quran"),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge
-                                              ?.copyWith(
-                                                  fontWeight: FontWeight.w600),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                        ),
-                                      ),
-                                    ),
-                                    TrackList(
-                                      sura: widget.sura,
-                                      tracks: widget.tracks,
-                                      currentIndex: currentMusicIndex,
-                                      onClickTrack: (index) {
-                                        playWithSelectedIndex(index);
-                                      },
-                                    ),
-                                    SizedBox(
-                                      height: 180,
-                                      child: Column(
-                                        children: [
-                                          _mainBody(
-                                              currentMusic: widget
-                                                  .tracks[currentMusicIndex],
-                                              index: currentMusicIndex),
-                                          MediaPlayerProgressWidget(
-                                            audioPlayer: player,
-                                          ),
-                                          MediaPlayerNavigationButtonWidget(
-                                            audioPlayer: player,
-                                            onPlay: onPlay,
-                                            onPrev: !player.hasPrevious
-                                                ? null
-                                                : player.seekToPrevious,
-                                            onNext: !player.hasNext
-                                                ? null
-                                                : player.seekToNext,
-                                            onClickPlaylist: () {},
-                                            isShuffleActive:
-                                                isShuffleModeActive,
-                                            onClickShuffle: () {
-                                              player.setShuffleModeEnabled(
-                                                  !isShuffleModeActive);
-                                              if (!isShuffleModeActive) {
-                                                player.shuffle();
-                                              }
-                                            },
-                                          ),
-                                        ],
-                                      ),
                                     ),
                                   ],
                                 ),
-                              );
-                            }),
+                              ),
+                            ],
                           ),
+                        );
+                      }),
+                    ),
                   ),
                 );
               });
