@@ -218,25 +218,25 @@ abstract class _LoadSongs implements QuranByReciter {
 
 /// @nodoc
 mixin _$SongsByArtistState {
-  List<QuranModel> get songs => throw _privateConstructorUsedError;
+  List<QuranModel> get quran => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<QuranModel> songs) loading,
-    required TResult Function(List<QuranModel> songs) loaded,
-    required TResult Function(String error, List<QuranModel> songs) error,
+    required TResult Function(List<QuranModel> quran) loading,
+    required TResult Function(List<QuranModel> quran) loaded,
+    required TResult Function(String error, List<QuranModel> quran) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<QuranModel> songs)? loading,
-    TResult? Function(List<QuranModel> songs)? loaded,
+    TResult? Function(List<QuranModel> quran)? loading,
+    TResult? Function(List<QuranModel> quran)? loaded,
     TResult? Function(String error, List<QuranModel> songs)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<QuranModel> songs)? loading,
-    TResult Function(List<QuranModel> songs)? loaded,
+    TResult Function(List<QuranModel> quran)? loading,
+    TResult Function(List<QuranModel> quran)? loaded,
     TResult Function(String error, List<QuranModel> songs)? error,
     required TResult orElse(),
   }) =>
@@ -275,7 +275,7 @@ abstract class $SongsByArtistStateCopyWith<$Res> {
           QuranByReciterState value, $Res Function(QuranByReciterState) then) =
       _$SongsByArtistStateCopyWithImpl<$Res, QuranByReciterState>;
   @useResult
-  $Res call({List<QuranModel> songs});
+  $Res call({List<QuranModel> quran});
 }
 
 /// @nodoc
@@ -291,12 +291,12 @@ class _$SongsByArtistStateCopyWithImpl<$Res, $Val extends QuranByReciterState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? songs = null,
+    Object? quran = null,
   }) {
     return _then(_value.copyWith(
-      songs: null == songs
-          ? _value.songs
-          : songs // ignore: cast_nullable_to_non_nullable
+      quran: null == quran
+          ? _value.quran
+          : quran // ignore: cast_nullable_to_non_nullable
               as List<QuranModel>,
     ) as $Val);
   }
@@ -310,7 +310,7 @@ abstract class _$$_LoadingCopyWith<$Res>
       __$$_LoadingCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<QuranModel> songs});
+  $Res call({List<QuranModel> quran});
 }
 
 /// @nodoc
@@ -323,12 +323,12 @@ class __$$_LoadingCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? songs = null,
+    Object? quran = null,
   }) {
     return _then(_$_Loading(
-      null == songs
-          ? _value._songs
-          : songs // ignore: cast_nullable_to_non_nullable
+      null == quran
+          ? _value._quran
+          : quran // ignore: cast_nullable_to_non_nullable
               as List<QuranModel>,
     ));
   }
@@ -337,19 +337,19 @@ class __$$_LoadingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loading implements _Loading {
-  const _$_Loading(final List<QuranModel> songs) : _songs = songs;
+  const _$_Loading(final List<QuranModel> quran) : _quran = quran;
 
-  final List<QuranModel> _songs;
+  final List<QuranModel> _quran;
   @override
-  List<QuranModel> get songs {
-    if (_songs is EqualUnmodifiableListView) return _songs;
+  List<QuranModel> get quran {
+    if (_quran is EqualUnmodifiableListView) return _quran;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_songs);
+    return EqualUnmodifiableListView(_quran);
   }
 
   @override
   String toString() {
-    return 'SongsByArtistState.loading(songs: $songs)';
+    return 'SongsByArtistState.loading(songs: $quran)';
   }
 
   @override
@@ -357,12 +357,12 @@ class _$_Loading implements _Loading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loading &&
-            const DeepCollectionEquality().equals(other._songs, _songs));
+            const DeepCollectionEquality().equals(other._quran, _quran));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_songs));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_quran));
 
   @JsonKey(ignore: true)
   @override
@@ -373,33 +373,33 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<QuranModel> songs) loading,
-    required TResult Function(List<QuranModel> songs) loaded,
-    required TResult Function(String error, List<QuranModel> songs) error,
+    required TResult Function(List<QuranModel> quran) loading,
+    required TResult Function(List<QuranModel> quran) loaded,
+    required TResult Function(String error, List<QuranModel> quran) error,
   }) {
-    return loading(songs);
+    return loading(quran);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<QuranModel> songs)? loading,
-    TResult? Function(List<QuranModel> songs)? loaded,
-    TResult? Function(String error, List<QuranModel> songs)? error,
+    TResult? Function(List<QuranModel> quran)? loading,
+    TResult? Function(List<QuranModel> quran)? loaded,
+    TResult? Function(String error, List<QuranModel> quran)? error,
   }) {
-    return loading?.call(songs);
+    return loading?.call(quran);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<QuranModel> songs)? loading,
-    TResult Function(List<QuranModel> songs)? loaded,
-    TResult Function(String error, List<QuranModel> songs)? error,
+    TResult Function(List<QuranModel> quran)? loading,
+    TResult Function(List<QuranModel> quran)? loaded,
+    TResult Function(String error, List<QuranModel> quran)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(songs);
+      return loading(quran);
     }
     return orElse();
   }
@@ -443,7 +443,7 @@ abstract class _Loading implements QuranByReciterState {
   const factory _Loading(final List<QuranModel> songs) = _$_Loading;
 
   @override
-  List<QuranModel> get songs;
+  List<QuranModel> get quran;
   @override
   @JsonKey(ignore: true)
   _$$_LoadingCopyWith<_$_Loading> get copyWith =>
@@ -457,7 +457,7 @@ abstract class _$$_LoadedCopyWith<$Res>
       __$$_LoadedCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<QuranModel> songs});
+  $Res call({List<QuranModel> quran});
 }
 
 /// @nodoc
@@ -470,12 +470,12 @@ class __$$_LoadedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? songs = null,
+    Object? quran = null,
   }) {
     return _then(_$_Loaded(
-      null == songs
-          ? _value._songs
-          : songs // ignore: cast_nullable_to_non_nullable
+      null == quran
+          ? _value._quran
+          : quran // ignore: cast_nullable_to_non_nullable
               as List<QuranModel>,
     ));
   }
@@ -484,19 +484,19 @@ class __$$_LoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  const _$_Loaded(final List<QuranModel> songs) : _songs = songs;
+  const _$_Loaded(final List<QuranModel> _quran) : _quran = _quran;
 
-  final List<QuranModel> _songs;
+  final List<QuranModel> _quran;
   @override
-  List<QuranModel> get songs {
-    if (_songs is EqualUnmodifiableListView) return _songs;
+  List<QuranModel> get quran {
+    if (_quran is EqualUnmodifiableListView) return _quran;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_songs);
+    return EqualUnmodifiableListView(_quran);
   }
 
   @override
   String toString() {
-    return 'SongsByArtistState.loaded(songs: $songs)';
+    return 'SongsByArtistState.loaded(songs: $quran)';
   }
 
   @override
@@ -504,12 +504,12 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
-            const DeepCollectionEquality().equals(other._songs, _songs));
+            const DeepCollectionEquality().equals(other._quran, _quran));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_songs));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_quran));
 
   @JsonKey(ignore: true)
   @override
@@ -520,33 +520,33 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<QuranModel> songs) loading,
-    required TResult Function(List<QuranModel> songs) loaded,
-    required TResult Function(String error, List<QuranModel> songs) error,
+    required TResult Function(List<QuranModel> quran) loading,
+    required TResult Function(List<QuranModel> quran) loaded,
+    required TResult Function(String error, List<QuranModel> quran) error,
   }) {
-    return loaded(songs);
+    return loaded(quran);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<QuranModel> songs)? loading,
-    TResult? Function(List<QuranModel> songs)? loaded,
-    TResult? Function(String error, List<QuranModel> songs)? error,
+    TResult? Function(List<QuranModel> quran)? loading,
+    TResult? Function(List<QuranModel> quran)? loaded,
+    TResult? Function(String error, List<QuranModel> quran)? error,
   }) {
-    return loaded?.call(songs);
+    return loaded?.call(quran);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<QuranModel> songs)? loading,
-    TResult Function(List<QuranModel> songs)? loaded,
-    TResult Function(String error, List<QuranModel> songs)? error,
+    TResult Function(List<QuranModel> quran)? loading,
+    TResult Function(List<QuranModel> quran)? loaded,
+    TResult Function(String error, List<QuranModel> quran)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(songs);
+      return loaded(quran);
     }
     return orElse();
   }
@@ -587,10 +587,10 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements QuranByReciterState {
-  const factory _Loaded(final List<QuranModel> songs) = _$_Loaded;
+  const factory _Loaded(final List<QuranModel> quran) = _$_Loaded;
 
   @override
-  List<QuranModel> get songs;
+  List<QuranModel> get quran;
   @override
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
@@ -604,7 +604,7 @@ abstract class _$$_ErrorCopyWith<$Res>
       __$$_ErrorCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String error, List<QuranModel> songs});
+  $Res call({String error, List<QuranModel> quran});
 }
 
 /// @nodoc
@@ -618,16 +618,16 @@ class __$$_ErrorCopyWithImpl<$Res>
   @override
   $Res call({
     Object? error = null,
-    Object? songs = null,
+    Object? quran = null,
   }) {
     return _then(_$_Error(
       null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
-      null == songs
-          ? _value._songs
-          : songs // ignore: cast_nullable_to_non_nullable
+      null == quran
+          ? _value._quran
+          : quran // ignore: cast_nullable_to_non_nullable
               as List<QuranModel>,
     ));
   }
@@ -636,21 +636,21 @@ class __$$_ErrorCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error(this.error, final List<QuranModel> songs) : _songs = songs;
+  const _$_Error(this.error, final List<QuranModel> quran) : _quran = quran;
 
   @override
   final String error;
-  final List<QuranModel> _songs;
+  final List<QuranModel> _quran;
   @override
-  List<QuranModel> get songs {
-    if (_songs is EqualUnmodifiableListView) return _songs;
+  List<QuranModel> get quran {
+    if (_quran is EqualUnmodifiableListView) return _quran;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_songs);
+    return EqualUnmodifiableListView(_quran);
   }
 
   @override
   String toString() {
-    return 'SongsByArtistState.error(error: $error, songs: $songs)';
+    return 'SongsByArtistState.error(error: $error, songs: $quran)';
   }
 
   @override
@@ -659,12 +659,12 @@ class _$_Error implements _Error {
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
             (identical(other.error, error) || other.error == error) &&
-            const DeepCollectionEquality().equals(other._songs, _songs));
+            const DeepCollectionEquality().equals(other._quran, _quran));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, error, const DeepCollectionEquality().hash(_songs));
+      runtimeType, error, const DeepCollectionEquality().hash(_quran));
 
   @JsonKey(ignore: true)
   @override
@@ -675,33 +675,33 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<QuranModel> songs) loading,
-    required TResult Function(List<QuranModel> songs) loaded,
-    required TResult Function(String error, List<QuranModel> songs) error,
+    required TResult Function(List<QuranModel> quran) loading,
+    required TResult Function(List<QuranModel> quran) loaded,
+    required TResult Function(String error, List<QuranModel> quran) error,
   }) {
-    return error(this.error, songs);
+    return error(this.error, quran);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<QuranModel> songs)? loading,
-    TResult? Function(List<QuranModel> songs)? loaded,
-    TResult? Function(String error, List<QuranModel> songs)? error,
+    TResult? Function(List<QuranModel> quran)? loading,
+    TResult? Function(List<QuranModel> quran)? loaded,
+    TResult? Function(String error, List<QuranModel> quran)? error,
   }) {
-    return error?.call(this.error, songs);
+    return error?.call(this.error, quran);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<QuranModel> songs)? loading,
-    TResult Function(List<QuranModel> songs)? loaded,
-    TResult Function(String error, List<QuranModel> songs)? error,
+    TResult Function(List<QuranModel> quran)? loading,
+    TResult Function(List<QuranModel> quran)? loaded,
+    TResult Function(String error, List<QuranModel> quran)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error, songs);
+      return error(this.error, quran);
     }
     return orElse();
   }
@@ -742,12 +742,12 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements QuranByReciterState {
-  const factory _Error(final String error, final List<QuranModel> songs) =
+  const factory _Error(final String error, final List<QuranModel> quran) =
       _$_Error;
 
   String get error;
   @override
-  List<QuranModel> get songs;
+  List<QuranModel> get quran;
   @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>

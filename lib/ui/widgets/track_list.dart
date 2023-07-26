@@ -40,7 +40,7 @@ class _TrackListState extends State<TrackList> {
                         track: widget.tracks[index],
                         isCurrent: widget.currentIndex == index,
                         context: context,
-                        index: index);
+                        index: index == 114 ? 113 : index);
                   }),
                 ),
               ),

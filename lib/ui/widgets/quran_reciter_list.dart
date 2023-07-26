@@ -22,8 +22,11 @@ import '../../config/locale/app_localizations.dart';
 class QuranByReciterListWidget extends StatefulWidget {
   final ReciterBloc reciterBloc;
   final QuranByReciterBloc quranByReciterBloc;
-  final void Function(
-      {required List<QuranModel> tracks, required int initialIndex}) onTapTrack;
+
+  final void Function({
+    required List<QuranModel> tracks,
+    required int initialIndex,
+  }) onTapTrack;
 
   var savedQuranList;
   List<QuranModel> savedQuranList2 = [];
@@ -43,29 +46,29 @@ class _QuranByReciterListWidgetState extends State<QuranByReciterListWidget> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       widget.reciterBloc.add(const ReciterEvent.loadReciter());
-      await checkList();
+      // await checkList();
       return;
     });
     super.initState();
   }
 
-  Future<void> checkList() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? savedQuranList = pref.getString("savedQuranList");
-    if (savedQuranList != null) {
-      widget.savedQuranList2.clear();
-      widget.savedQuranList = await jsonDecode(savedQuranList);
-      debugPrint(widget.savedQuranList.toString());
-      for (var item in widget.savedQuranList) {
-        widget.savedQuranList2.add(QuranModel(
-          id: item['id'],
-          audioUrl: item['audio_url'],
-        ));
-      }
-      debugPrint(
-          "savedQuranList length is list player ${widget.savedQuranList2.length}");
-    }
-  }
+  // checkList() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   String? savedQuranList = pref.getString("savedQuranList");
+  //   if (savedQuranList != null) {
+  //     widget.savedQuranList2.clear();
+  //     widget.savedQuranList = await jsonDecode(savedQuranList);
+  //     debugPrint(widget.savedQuranList.toString());
+  //     for (var item in widget.savedQuranList) {
+  //       widget.savedQuranList2.add(QuranModel(
+  //         id: item['id'],
+  //         audioUrl: item['audio_url'],
+  //       ));
+  //     }
+  //     debugPrint(
+  //         "savedQuranList length is list player ${widget.savedQuranList2.length}");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -131,10 +134,9 @@ class _QuranByReciterListWidgetState extends State<QuranByReciterListWidget> {
   }) {
     return BlocBuilder<QuranByReciterBloc, Map<String, QuranByReciterState>>(
       bloc: widget.quranByReciterBloc,
-      builder: (context, songArtistsState) {
-        var songArtistState = songArtistsState[artistName.toLowerCase()] ??
+      builder: (context, quranByReciterState) {
+        var quranState = quranByReciterState[artistName.toLowerCase()] ??
             const QuranByReciterState.loading([]);
-        debugPrint(songArtistState.songs.toString());
 
         return ShimmerWidget(
           linearGradient: AppTheme().shimmerGradient,
@@ -159,13 +161,13 @@ class _QuranByReciterListWidgetState extends State<QuranByReciterListWidget> {
                                       borderRadius: BorderRadius.circular(8)),
                                 )
                               : Container())),
-                  songArtistState.maybeMap(loaded: (value) {
+                  quranState.maybeMap(loaded: (value) {
                     return QuranPlayerScreen(
                       sura: (AppLocalizations.of(context)!.isEnLocale)
                           ? widget.reciterBloc.suarsEnglishName
                           : widget.reciterBloc.suarsArabicName,
-                      tracks: songArtistState.songs.isNotEmpty
-                          ? songArtistState.songs
+                      tracks: quranState.quran.isNotEmpty
+                          ? quranState.quran
                           : widget.savedQuranList2,
                       initialIndex: 0,
                     );
@@ -178,7 +180,7 @@ class _QuranByReciterListWidgetState extends State<QuranByReciterListWidget> {
                       sura: (AppLocalizations.of(context)!.isEnLocale)
                           ? widget.reciterBloc.suarsEnglishName
                           : widget.reciterBloc.suarsArabicName,
-                      tracks: widget.savedQuranList2, //songArtistState.songs,
+                      tracks: widget.savedQuranList2,
                       initialIndex: 0,
                     );
                   })
@@ -214,7 +216,10 @@ class _QuranByReciterListWidgetState extends State<QuranByReciterListWidget> {
                     width: 50,
                     height: 50,
                     onTap: () {
-                      widget.onTapTrack(tracks: quran, initialIndex: index);
+                      widget.onTapTrack(
+                        tracks: quran,
+                        initialIndex: index,
+                      );
                       return;
                     },
                     trackCoverUrl:

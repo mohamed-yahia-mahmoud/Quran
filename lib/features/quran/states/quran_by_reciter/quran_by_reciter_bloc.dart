@@ -56,7 +56,7 @@ class QuranByReciterBloc
             err.message,
             state[reciter.toLowerCase()] == null
                 ? []
-                : (state[reciter.toLowerCase()])!.songs,
+                : (state[reciter.toLowerCase()])!.quran,
           )
         });
       });

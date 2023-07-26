@@ -38,7 +38,7 @@ class _TopLikesState extends State<TopLikes> {
               child: SingleChildScrollView(
                 child: Column(
                   children: List.generate(3, (index) {
-                    int number = random.nextInt(113) + 0;
+                    int number = random.nextInt(112) + 0;
                     return trackItem(
                         track: widget.tracks[number],
                         isCurrent: widget.currentIndex == number,

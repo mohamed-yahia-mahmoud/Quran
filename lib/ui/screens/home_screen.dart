@@ -32,29 +32,29 @@ class _HomeScreenState extends State<HomeScreen> {
   bool showSearchResults = false;
   @override
   void initState() {
+    // checkList();
     super.initState();
     reciterBloc = widget.instance.get<ReciterBloc>();
     quranByReciterBloc = widget.instance.get<QuranByReciterBloc>();
     searchBloc = widget.instance.get<SearchBloc>();
-    checkList();
   }
 
-  checkList() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? savedQuranList = pref.getString("savedQuranList");
-    if (savedQuranList != null) {
-      widget.savedQuranList = await jsonDecode(savedQuranList);
-      debugPrint(widget.savedQuranList.toString());
-      for (var item in widget.savedQuranList) {
-        widget.savedQuranList2.add(QuranModel(
-          id: item['id'],
-          audioUrl: item['audio_url'],
-        ));
-      }
-      debugPrint(
-          "savedQuranList length is home ${widget.savedQuranList2.length}");
-    }
-  }
+  // checkList() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   String? savedQuranList = pref.getString("savedQuranList");
+  //   if (savedQuranList != null) {
+  //     widget.savedQuranList = await jsonDecode(savedQuranList);
+  //     debugPrint(widget.savedQuranList.toString());
+  //     for (var item in widget.savedQuranList) {
+  //       widget.savedQuranList2.add(QuranModel(
+  //         id: item['id'],
+  //         audioUrl: item['audio_url'],
+  //       ));
+  //     }
+  //     debugPrint(
+  //         "savedQuranList length is home ${widget.savedQuranList2.length}");
+  //   }
+  // }
 
   void searchFieldListener() {
     if (_searchFieldController.text.isEmpty) {
@@ -113,13 +113,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return SizedBox(
       height: MediaQuery.of(context).size.height - 100,
       child: QuranByReciterListWidget(
-          quranByReciterBloc: quranByReciterBloc,
-          reciterBloc: reciterBloc,
-          onTapTrack: onTapTrack),
+        quranByReciterBloc: quranByReciterBloc,
+        reciterBloc: reciterBloc,
+        onTapTrack: onTapTrack,
+      ),
     );
   }
 
-  onTapTrack({required List<QuranModel> tracks, int initialIndex = 0}) {
+  onTapTrack({
+    required List<QuranModel> tracks,
+    int initialIndex = 0,
+  }) {
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -127,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   sura: (AppLocalizations.of(context)!.isEnLocale)
                       ? reciterBloc.suarsEnglishName
                       : reciterBloc.suarsArabicName,
-                  tracks: tracks.isNotEmpty ? tracks : widget.savedQuranList2,
+                  tracks: tracks,
                   initialIndex: initialIndex,
                 )));
     return;
